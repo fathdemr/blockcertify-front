@@ -17,8 +17,8 @@ export const authApi = {
   login: (email: string, password: string) =>
     exapi.post('/user/login', { email, password }),
 
-  register: (name: string, email: string, password: string) =>
-    exapi.post('/user/register/admin', { name, email, password }),
+  register: (firstName: string, lastName: string, email: string, password: string) =>
+    exapi.post('/user/register/admin', { FirstName: firstName, LastName: lastName, email, password }),
 
   logout: () =>
     exapi.post('/user/logout'),

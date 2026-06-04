@@ -5,7 +5,8 @@ import { authApi } from '../services/api';
 
 export default function Register() {
   const navigate = useNavigate();
-  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
@@ -17,7 +18,7 @@ export default function Register() {
     setError('');
     setLoading(true);
     try {
-      await authApi.register(name, email, password);
+      await authApi.register(firstName, lastName, email, password);
       navigate('/giris');
     } catch {
       setError('Kayıt sırasında bir hata oluştu.');
@@ -49,17 +50,31 @@ export default function Register() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-xs font-semibold text-on-surface mb-1.5">Ad Soyad</label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Ad Soyad"
-                required
-                className="w-full px-4 py-2.5 rounded-lg border border-outline-variant/60 text-sm focus:outline-none focus:border-on-tertiary-container focus:ring-2 focus:ring-on-tertiary-container/10 placeholder:text-outline transition-all"
-              />
+            <div className="flex gap-3">
+              <div className="flex-1">
+                <label className="block text-xs font-semibold text-on-surface mb-1.5">Ad</label>
+                <input
+                  type="text"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  placeholder="Adınız"
+                  required
+                  className="w-full px-4 py-2.5 rounded-lg border border-outline-variant/60 text-sm focus:outline-none focus:border-on-tertiary-container focus:ring-2 focus:ring-on-tertiary-container/10 placeholder:text-outline transition-all"
+                />
+              </div>
+              <div className="flex-1">
+                <label className="block text-xs font-semibold text-on-surface mb-1.5">Soyad</label>
+                <input
+                  type="text"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  placeholder="Soyadınız"
+                  required
+                  className="w-full px-4 py-2.5 rounded-lg border border-outline-variant/60 text-sm focus:outline-none focus:border-on-tertiary-container focus:ring-2 focus:ring-on-tertiary-container/10 placeholder:text-outline transition-all"
+                />
+              </div>
             </div>
+
             <div>
               <label className="block text-xs font-semibold text-on-surface mb-1.5">E-posta Adresi</label>
               <input
@@ -71,6 +86,7 @@ export default function Register() {
                 className="w-full px-4 py-2.5 rounded-lg border border-outline-variant/60 text-sm focus:outline-none focus:border-on-tertiary-container focus:ring-2 focus:ring-on-tertiary-container/10 placeholder:text-outline transition-all"
               />
             </div>
+
             <div>
               <label className="block text-xs font-semibold text-on-surface mb-1.5">Şifre</label>
               <div className="relative">
