@@ -6,17 +6,17 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 export default function Verify() {
-  const [txHash, setTxHash] = useState('');
+  const [diplomaId, setDiplomaId] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<VerifyResult | null>(null);
 
   const handleVerify = async (e: FormEvent) => {
     e.preventDefault();
-    if (!txHash.trim()) return;
+    if (!diplomaId.trim()) return;
     setLoading(true);
     setResult(null);
     try {
-      const res = await diplomaApi.verify(txHash.trim());
+      const res = await diplomaApi.verify(diplomaId.trim());
       setResult(res.data);
     } catch {
       setResult({ valid: false, message: 'Doğrulama sırasında bir hata oluştu.' });
@@ -39,26 +39,27 @@ export default function Verify() {
               <span className="text-on-tertiary-container">Doğrulayın.</span>
             </h1>
             <p className="text-on-surface-variant max-w-lg mx-auto leading-relaxed">
-              Blockchain üzerindeki benzersiz işlem numaranızı (TX Number) girerek
+              Diplomaya ait benzersiz <strong className="text-on-surface">Diploma ID</strong>'sini girerek
               belgenizin geçerliliğini ve orijinalliğini anında sorgulayın.
+              Diploma ID'sini ilgili kurumdan veya QR kodunu tarayarak öğrenebilirsiniz.
             </p>
           </div>
 
           <form onSubmit={handleVerify} className="bg-white rounded-2xl border border-outline-variant/40 p-8 card-shadow mb-8">
-            <label className="block text-sm font-semibold text-on-surface mb-2">TX Numarası</label>
+            <label className="block text-sm font-semibold text-on-surface mb-2">Diploma ID</label>
             <div className="relative mb-4">
               <ShieldCheck className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-outline" />
               <input
                 type="text"
-                value={txHash}
-                onChange={(e) => setTxHash(e.target.value)}
-                placeholder="0x71C7656EC7ab88b098dcfB751B7401B5f6d8976F..."
+                value={diplomaId}
+                onChange={(e) => setDiplomaId(e.target.value)}
+                placeholder="BC-4BDA0D6C6438"
                 className="w-full pl-10 pr-4 py-3 rounded-lg border border-outline-variant/60 text-sm font-mono-code focus:outline-none focus:border-on-tertiary-container focus:ring-2 focus:ring-on-tertiary-container/10 placeholder:text-outline placeholder:font-sans transition-all"
               />
             </div>
             <button
               type="submit"
-              disabled={loading || !txHash.trim()}
+              disabled={loading || !diplomaId.trim()}
               className="w-full flex items-center justify-center gap-2 py-3 bg-primary text-on-primary rounded-lg font-semibold text-sm hover:bg-primary/90 transition-all disabled:opacity-60"
             >
               {loading
@@ -89,11 +90,11 @@ export default function Verify() {
                     ['Üniversite', result.diploma.university],
                     ['Bölüm', result.diploma.department],
                     ['Mezuniyet Yılı', String(result.diploma.graduation_year)],
-                    ['TX Hash', result.diploma.tx_hash],
+                    ['Diploma ID', result.diploma.diploma_no],
                   ].map(([label, value]) => (
                     <div key={label}>
                       <span className="text-xs text-on-surface-variant font-medium block mb-0.5">{label}</span>
-                      <span className={`font-medium text-on-surface text-xs ${label === 'TX Hash' ? 'font-mono-code break-all' : ''}`}>
+                      <span className={`font-medium text-on-surface text-xs ${label === 'Diploma ID' ? 'font-mono-code break-all' : ''}`}>
                         {value}
                       </span>
                     </div>
@@ -108,8 +109,8 @@ export default function Verify() {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-12">
             {[
-              { icon: ShieldCheck, title: 'Kırılmaz Güvenlik', desc: 'Verileriniz Ethereum blockchain ağı üzerinde şifrelenmiş olarak saklanır.' },
-              { icon: Search, title: 'Anlık Sorgulama', desc: 'Arşivlerde vakit kaybetmeden milisaniyeler içinde doğrulama sonucu alın.' },
+              { icon: ShieldCheck, title: 'Kırılmaz Güvenlik', desc: 'Verileriniz blockchain ağı üzerinde şifrelenmiş olarak kalıcı biçimde saklanır.' },
+              { icon: Search, title: 'Anlık Sorgulama', desc: 'Diploma ID\'si ile milisaniyeler içinde doğrulama sonucu alın.' },
               { icon: CheckCircle2, title: 'Evrensel Standart', desc: 'Dünya çapında geçerli W3C Verifiable Credentials standartlarına uyumludur.' },
             ].map(({ icon: Icon, title, desc }) => (
               <div key={title} className="p-5 rounded-xl bg-white border border-outline-variant/40 card-shadow">

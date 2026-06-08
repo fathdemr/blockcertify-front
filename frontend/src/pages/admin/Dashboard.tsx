@@ -28,8 +28,8 @@ export default function Dashboard() {
 
   const preview = diplomas.slice(0, 4);
 
-  const verifyUrl = selected?.tx_hash
-    ? `${window.location.origin}/dogrula?tx=${selected.tx_hash}`
+  const verifyUrl = selected?.diploma_no
+    ? `${window.location.origin}/dogrula?id=${selected.diploma_no}`
     : '';
 
   async function handleShare() {

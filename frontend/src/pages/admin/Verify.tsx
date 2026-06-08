@@ -4,17 +4,17 @@ import { diplomaApi } from '../../services/api';
 import type { VerifyResult } from '../../types';
 
 export default function AdminVerify() {
-  const [txHash, setTxHash] = useState('');
+  const [diplomaId, setDiplomaId] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<VerifyResult | null>(null);
 
   const handleVerify = async (e: FormEvent) => {
     e.preventDefault();
-    if (!txHash.trim()) return;
+    if (!diplomaId.trim()) return;
     setLoading(true);
     setResult(null);
     try {
-      const res = await diplomaApi.verify(txHash.trim());
+      const res = await diplomaApi.verify(diplomaId.trim());
       setResult(res.data);
     } catch {
       setResult({ valid: false, message: 'Doğrulama sırasında bir hata oluştu.' });
@@ -32,30 +32,31 @@ export default function AdminVerify() {
           GÜVENLİ BLOCKCHAIN ALTYAPISI
         </span>
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-on-surface mb-3">
-          Diplomanızı Saniyeler İçinde{' '}
-          <span className="text-on-tertiary-container">Doğrulayın.</span>
+          Diploma ID ile{' '}
+          <span className="text-on-tertiary-container">Doğrulama</span>
         </h1>
         <p className="text-on-surface-variant leading-relaxed">
-          Blockchain üzerindeki benzersiz işlem numaranızı (TX Number) girerek
-          belgenizin geçerliliğini ve orijinalliğini anında sorgulayın.
+          Diplomaya ait <strong className="text-on-surface">Diploma ID</strong>'sini girerek
+          kaydın blockchain'deki geçerliliğini anında sorgulayın.
+          Diploma ID'sini geçmiş kayıtlardan veya QR kodundan öğrenebilirsiniz.
         </p>
       </div>
 
-      <form onSubmit={handleVerify} className="bg-white rounded-2xl border border-outline-variant/40 card-shadow p-8 mb-8">
-        <label className="block text-sm font-semibold text-on-surface mb-2">TX Numarası</label>
+      <form onSubmit={handleVerify} className="bg-white rounded-2xl border border-outline-variant/40 card-shadow p-4 md:p-8 mb-8">
+        <label className="block text-sm font-semibold text-on-surface mb-2">Diploma ID</label>
         <div className="relative mb-4">
           <ShieldCheck className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-outline" />
           <input
             type="text"
-            value={txHash}
-            onChange={(e) => setTxHash(e.target.value)}
-            placeholder="0x71C7656EC7ab88b098dcfB751B7401B5f6d8976F..."
+            value={diplomaId}
+            onChange={(e) => setDiplomaId(e.target.value)}
+            placeholder="BC-4BDA0D6C6438"
             className="w-full pl-10 pr-4 py-3 rounded-lg border border-outline-variant/60 text-sm font-mono-code focus:outline-none focus:border-on-tertiary-container focus:ring-2 focus:ring-on-tertiary-container/10 placeholder:text-outline placeholder:font-sans transition-all"
           />
         </div>
         <button
           type="submit"
-          disabled={loading || !txHash.trim()}
+          disabled={loading || !diplomaId.trim()}
           className="w-full flex items-center justify-center gap-2 py-3 bg-primary text-on-primary rounded-xl font-semibold text-sm hover:bg-primary/90 transition-all disabled:opacity-60"
         >
           {loading
@@ -84,11 +85,11 @@ export default function AdminVerify() {
                 ['Üniversite', result.diploma.university],
                 ['Bölüm', result.diploma.department],
                 ['Mezuniyet Yılı', String(result.diploma.graduation_year)],
-                ['TX Hash', result.diploma.tx_hash],
+                ['Diploma ID', result.diploma.diploma_no],
               ].map(([label, value]) => (
                 <div key={label}>
                   <span className="text-xs text-on-surface-variant font-medium block mb-0.5">{label}</span>
-                  <span className={`font-medium text-on-surface text-xs ${label === 'TX Hash' ? 'font-mono-code break-all' : ''}`}>
+                  <span className={`font-medium text-on-surface text-xs ${label === 'Diploma ID' ? 'font-mono-code break-all' : ''}`}>
                     {value}
                   </span>
                 </div>
@@ -98,7 +99,6 @@ export default function AdminVerify() {
           {result.message && <p className="text-sm text-red-700">{result.message}</p>}
         </div>
       )}
-
     </div>
   );
 }

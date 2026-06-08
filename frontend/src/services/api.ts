@@ -32,8 +32,8 @@ export const diplomaApi = {
       headers: { 'Content-Type': 'multipart/form-data' },
     }),
 
-  verify: (txHash: string) =>
-    api.post<VerifyResult>('/verify', { tx_hash: txHash }),
+  verify: (diplomaId: string) =>
+    api.post<VerifyResult>('/verify', { diplomaId }),
 
   getAll: () =>
     api.get<Diploma[]>('/records'),
