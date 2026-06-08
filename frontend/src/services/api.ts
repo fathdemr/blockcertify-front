@@ -67,7 +67,11 @@ export const userApi = {
     exapi.get('/user/me'),
 
   updateMe: (data: { firstName?: string; lastName?: string; password?: string }) =>
-    exapi.put('/user/me', data),
+    exapi.put('/user/me', {
+      ...(data.firstName !== undefined && { FirstName: data.firstName }),
+      ...(data.lastName  !== undefined && { LastName:  data.lastName  }),
+      ...(data.password  !== undefined && { Password:  data.password  }),
+    }),
 };
 
 export default api;

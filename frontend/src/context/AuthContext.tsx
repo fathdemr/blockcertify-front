@@ -3,16 +3,13 @@ import type { User } from '../types';
 import { authApi, userApi } from '../services/api';
 
 function toUser(data: Record<string, unknown>): User {
-  const firstName = (data.firstName ?? data.first_name ?? '') as string;
-  const lastName = (data.lastName ?? data.last_name ?? '') as string;
-  return {
-    id: data.id as number,
-    firstName,
-    lastName,
-    name: `${firstName} ${lastName}`.trim() || (data.name as string) || 'Admin',
-    email: data.email as string,
-    role: data.role as User['role'],
-  };
+  const firstName = (data.FirstName ?? data.firstName ?? data.first_name ?? '') as string;
+  const lastName  = (data.LastName  ?? data.lastName  ?? data.last_name  ?? '') as string;
+  const email     = (data.Email     ?? data.email     ?? '') as string;
+  const role      = (data.Role      ?? data.role      ?? 'admin') as User['role'];
+  const id        = (data.ID ?? data.Id ?? data.id ?? 0) as number;
+  const fullName  = `${firstName} ${lastName}`.trim() || (data.Name ?? data.name ?? '') as string;
+  return { id, firstName, lastName, name: fullName || email, email, role };
 }
 
 interface AuthContextValue {
@@ -49,14 +46,19 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
     const stored = localStorage.getItem('bc_user');
     if (stored) {
       try {
-        setUserState(JSON.parse(stored));
+        const parsed = JSON.parse(stored);
+        // migrate old format that only had `name` field
+        if (!parsed.firstName && parsed.name) {
+          const [fn = '', ...rest] = (parsed.name as string).split(' ');
+          parsed.firstName = fn;
+          parsed.lastName = rest.join(' ');
+        }
+        setUserState(parsed);
       } catch {
         localStorage.removeItem('bc_user');
       }
     }
-    setLoading(false);
-    // fetch fresh data from API on mount
-    refreshUser();
+    refreshUser().finally(() => setLoading(false));
   }, [refreshUser]);
 
   const login = async (email: string, password: string) => {
