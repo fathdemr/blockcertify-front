@@ -46,9 +46,20 @@ export interface VerifyPayload {
 }
 
 export interface VerifyResult {
-  valid: boolean;
-  diploma?: Diploma;
+  verified: boolean;
+  diplomaID?: string;
+  studentName?: string;
+  university?: string;
+  degree?: string;
+  issueDate?: string;
+  diplomaHash?: string;
+  polygonTxHash?: string;
+  arweaveTxID?: string;
+  arweaveUrl?: string;
   message?: string;
+  // legacy fallback
+  valid?: boolean;
+  diploma?: Diploma;
 }
 
 export type DiplomaStatus = 'pending' | 'approved' | 'rejected';

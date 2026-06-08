@@ -17,7 +17,7 @@ export default function AdminVerify() {
       const res = await diplomaApi.verify(diplomaId.trim());
       setResult(res.data);
     } catch {
-      setResult({ valid: false, message: 'Doğrulama sırasında bir hata oluştu.' });
+      setResult({ verified: false, message: 'Doğrulama sırasında bir hata oluştu.' });
     } finally {
       setLoading(false);
     }
@@ -67,36 +67,59 @@ export default function AdminVerify() {
 
       {result && (
         <div className={`rounded-2xl border p-6 mb-8 ${
-          result.valid ? 'bg-emerald-50 border-emerald-200' : 'bg-red-50 border-red-200'
+          result.verified ? 'bg-emerald-50 border-emerald-200' : 'bg-red-50 border-red-200'
         }`}>
-          <div className="flex items-center gap-3 mb-4">
-            {result.valid
-              ? <CheckCircle2 className="w-6 h-6 text-emerald-600" />
-              : <XCircle className="w-6 h-6 text-red-600" />}
-            <h3 className={`font-semibold text-lg ${result.valid ? 'text-emerald-800' : 'text-red-800'}`}>
-              {result.valid ? 'Diploma Geçerli' : 'Diploma Geçersiz'}
+          <div className="flex items-center gap-3 mb-5">
+            {result.verified
+              ? <CheckCircle2 className="w-6 h-6 text-emerald-600 shrink-0" />
+              : <XCircle className="w-6 h-6 text-red-600 shrink-0" />}
+            <h3 className={`font-semibold text-lg ${result.verified ? 'text-emerald-800' : 'text-red-800'}`}>
+              {result.verified ? 'Diploma Geçerli ve Doğrulandı' : 'Diploma Doğrulanamadı'}
             </h3>
           </div>
-          {result.diploma && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-              {[
-                ['Ad Soyad', `${result.diploma.first_name} ${result.diploma.last_name}`],
-                ['Öğrenci No', result.diploma.student_no],
-                ['Üniversite', result.diploma.university],
-                ['Bölüm', result.diploma.department],
-                ['Mezuniyet Yılı', String(result.diploma.graduation_year)],
-                ['Diploma ID', result.diploma.diploma_no],
-              ].map(([label, value]) => (
-                <div key={label}>
-                  <span className="text-xs text-on-surface-variant font-medium block mb-0.5">{label}</span>
-                  <span className={`font-medium text-on-surface text-xs ${label === 'Diploma ID' ? 'font-mono-code break-all' : ''}`}>
-                    {value}
-                  </span>
-                </div>
-              ))}
-            </div>
+
+          {result.verified && (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+                {[
+                  ['Ad Soyad', result.studentName],
+                  ['Üniversite', result.university],
+                  ['Bölüm / Program', result.degree],
+                  ['Diploma ID', result.diplomaID],
+                  ['Düzenleme Tarihi', result.issueDate],
+                ].filter(([, v]) => v).map(([label, value]) => (
+                  <div key={label} className={label === 'Bölüm / Program' ? 'sm:col-span-2' : ''}>
+                    <span className="text-xs text-emerald-700/70 font-medium block mb-0.5">{label}</span>
+                    <span className="font-semibold text-emerald-900 text-sm">{value}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="border-t border-emerald-200 pt-4 space-y-3">
+                {result.polygonTxHash && (
+                  <div>
+                    <span className="text-xs text-emerald-700/70 font-medium block mb-0.5">Polygon TX Hash</span>
+                    <span className="font-mono text-xs text-emerald-800 break-all">{result.polygonTxHash}</span>
+                  </div>
+                )}
+                {result.arweaveUrl && (
+                  <div>
+                    <span className="text-xs text-emerald-700/70 font-medium block mb-1">Arweave Kalıcı Kayıt</span>
+                    <a
+                      href={result.arweaveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-700 underline underline-offset-2 hover:text-emerald-900 break-all"
+                    >
+                      {result.arweaveUrl}
+                    </a>
+                  </div>
+                )}
+              </div>
+            </>
           )}
-          {result.message && <p className="text-sm text-red-700">{result.message}</p>}
+
+          {result.message && <p className="text-sm text-red-700 mt-2">{result.message}</p>}
         </div>
       )}
     </div>
