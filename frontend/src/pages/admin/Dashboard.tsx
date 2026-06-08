@@ -59,8 +59,8 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="p-8">
-      <div className="flex items-center justify-between mb-8">
+    <div className="p-4 md:p-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="text-2xl font-bold text-on-surface">
             Hoş geldin {user?.name?.split(' ')[0] ?? 'Admin'}
@@ -107,11 +107,11 @@ export default function Dashboard() {
               <table className="w-full">
                 <thead>
                   <tr className="bg-surface text-xs text-on-surface-variant uppercase tracking-wider">
-                    <th className="px-6 py-3 text-left font-medium">Diploma No</th>
-                    <th className="px-6 py-3 text-left font-medium">İsim</th>
-                    <th className="px-6 py-3 text-left font-medium">Program</th>
-                    <th className="px-6 py-3 text-left font-medium">Durum</th>
-                    <th className="px-6 py-3 text-left font-medium">Eylem</th>
+                    <th className="px-3 md:px-6 py-3 text-left font-medium">Diploma No</th>
+                    <th className="px-3 md:px-6 py-3 text-left font-medium">İsim</th>
+                    <th className="hidden sm:table-cell px-3 md:px-6 py-3 text-left font-medium">Program</th>
+                    <th className="px-3 md:px-6 py-3 text-left font-medium">Durum</th>
+                    <th className="px-3 md:px-6 py-3 text-left font-medium">Eylem</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-outline-variant/20">
@@ -125,21 +125,21 @@ export default function Dashboard() {
                           : 'hover:bg-surface/50'
                       }`}
                     >
-                      <td className="px-6 py-4">
+                      <td className="px-3 md:px-6 py-4">
                         <span className="text-xs font-mono-code text-on-surface-variant">
                           #{d.diploma_no ?? String(d.id).slice(0, 8)}
                         </span>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-3 md:px-6 py-4">
                         <span className="font-semibold text-sm text-on-surface">
                           {d.first_name} {d.last_name}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-sm text-on-surface-variant">{d.department}</td>
-                      <td className="px-6 py-4">
+                      <td className="hidden sm:table-cell px-3 md:px-6 py-4 text-sm text-on-surface-variant">{d.department}</td>
+                      <td className="px-3 md:px-6 py-4">
                         <StatusBadge status={d.status} />
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-3 md:px-6 py-4">
                         <Link
                           to={`/admin/dogrula`}
                           onClick={(e) => e.stopPropagation()}

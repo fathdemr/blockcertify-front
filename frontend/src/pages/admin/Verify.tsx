@@ -24,14 +24,14 @@ export default function AdminVerify() {
   };
 
   return (
-    <div className="p-8 max-w-2xl mx-auto w-full">
+    <div className="p-4 md:p-8 max-w-2xl mx-auto w-full">
       <div className="mb-2 text-xs text-on-surface-variant font-medium">Doğrulama Merkezi</div>
 
       <div className="mb-10">
         <span className="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-widest uppercase rounded-full bg-secondary/10 text-secondary border border-secondary/20">
           GÜVENLİ BLOCKCHAIN ALTYAPISI
         </span>
-        <h1 className="text-4xl font-bold text-on-surface mb-3">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-on-surface mb-3">
           Diplomanızı Saniyeler İçinde{' '}
           <span className="text-on-tertiary-container">Doğrulayın.</span>
         </h1>
@@ -77,7 +77,7 @@ export default function AdminVerify() {
             </h3>
           </div>
           {result.diploma && (
-            <div className="grid grid-cols-2 gap-3 text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
               {[
                 ['Ad Soyad', `${result.diploma.first_name} ${result.diploma.last_name}`],
                 ['Öğrenci No', result.diploma.student_no],

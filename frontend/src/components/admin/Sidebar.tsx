@@ -8,7 +8,11 @@ const navItems = [
   { icon: CheckCircle, label: 'Diploma Doğrula', to: '/admin/dogrula' },
 ];
 
-export default function Sidebar() {
+interface SidebarProps {
+  onClose?: () => void;
+}
+
+export default function Sidebar({ onClose }: Readonly<SidebarProps>) {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
@@ -35,6 +39,7 @@ export default function Sidebar() {
             key={to}
             to={to}
             end={to === '/admin'}
+            onClick={onClose}
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
                 isActive

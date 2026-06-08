@@ -1,18 +1,43 @@
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../components/admin/Sidebar';
-import { Bell, HelpCircle, Search } from 'lucide-react';
+import { Bell, HelpCircle, Search, Menu } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useState } from 'react';
 
 export default function AdminLayout() {
   const { user } = useAuth();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="flex min-h-screen bg-surface">
-      <Sidebar />
+      {/* Overlay (mobile) */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <div
+        className={`fixed inset-y-0 left-0 z-50 transition-transform duration-300 lg:static lg:translate-x-0 ${
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        <Sidebar onClose={() => setSidebarOpen(false)} />
+      </div>
 
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top Bar */}
-        <header className="h-14 bg-white border-b border-outline-variant/30 flex items-center px-6 gap-4 shrink-0">
+        <header className="h-14 bg-white border-b border-outline-variant/30 flex items-center px-4 md:px-6 gap-3 shrink-0">
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="lg:hidden p-2 rounded-lg hover:bg-surface transition-colors shrink-0"
+            aria-label="Menüyü aç"
+          >
+            <Menu className="w-5 h-5 text-on-surface-variant" />
+          </button>
+
           <div className="flex-1 max-w-xs">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-outline" />
@@ -24,15 +49,15 @@ export default function AdminLayout() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3 ml-auto">
+          <div className="flex items-center gap-2 ml-auto">
             <button className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface transition-colors">
               <Bell className="w-4 h-4 text-on-surface-variant" />
             </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface transition-colors">
+            <button className="hidden sm:flex w-8 h-8 items-center justify-center rounded-lg hover:bg-surface transition-colors">
               <HelpCircle className="w-4 h-4 text-on-surface-variant" />
             </button>
             <div className="flex items-center gap-2 pl-3 border-l border-outline-variant/30">
-              <div className="text-right">
+              <div className="text-right hidden sm:block">
                 <p className="text-sm font-semibold text-on-surface leading-tight">
                   {user?.name ?? 'Admin'}
                 </p>

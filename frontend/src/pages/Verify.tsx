@@ -34,7 +34,7 @@ export default function Verify() {
             <span className="inline-block px-4 py-1.5 mb-6 text-xs font-semibold tracking-widest uppercase rounded-full bg-secondary/10 text-secondary border border-secondary/20">
               GÜVENLİ BLOCKCHAIN ALTYAPISI
             </span>
-            <h1 className="text-5xl font-bold text-on-surface mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-on-surface mb-4">
               Diplomanızı Saniyeler İçinde{' '}
               <span className="text-on-tertiary-container">Doğrulayın.</span>
             </h1>
@@ -82,7 +82,7 @@ export default function Verify() {
                 </h3>
               </div>
               {result.diploma && (
-                <div className="grid grid-cols-2 gap-3 text-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   {[
                     ['Ad Soyad', `${result.diploma.first_name} ${result.diploma.last_name}`],
                     ['Öğrenci No', result.diploma.student_no],

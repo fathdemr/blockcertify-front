@@ -67,7 +67,7 @@ export default function Home() {
               Blockchain Diploma Doğrulama
             </span>
 
-            <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6">
               Akademik Geleceğiniz,{' '}
               <span className="text-secondary-container">Blockchain</span>
               {' '}ile Güvende
@@ -107,7 +107,7 @@ export default function Home() {
 
         {/* Stats */}
         <div className="border-t border-white/10 bg-white/5">
-          <div className="max-w-[1280px] mx-auto px-6 py-10 grid grid-cols-3 gap-8 text-center">
+          <div className="max-w-[1280px] mx-auto px-6 py-10 grid grid-cols-3 gap-4 md:gap-8 text-center">
             {stats.map(({ value, label }) => (
               <div key={label}>
                 <p className="text-3xl font-bold text-white mb-1">{value}</p>
@@ -125,7 +125,7 @@ export default function Home() {
             <span className="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-widest uppercase rounded-full bg-secondary/10 text-secondary border border-secondary/20">
               NEDEN BİZ?
             </span>
-            <h2 className="text-4xl font-bold text-on-surface mb-4">Neden Biz?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-on-surface mb-4">Neden Biz?</h2>
             <p className="text-on-surface-variant max-w-lg mx-auto">
               Geleneksel diploma süreçlerini dijital, güvenli ve anında doğrulanabilir hale getiriyoruz.
             </p>
@@ -151,7 +151,7 @@ export default function Home() {
       {/* ── Gerçek Bağlantılar ── */}
       <section className="bg-surface py-24 px-6">
         <div className="max-w-[1280px] mx-auto">
-          <h2 className="text-4xl font-bold text-on-surface text-center mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-on-surface text-center mb-4">
             Gerçek Bağlantılar, Güvenilir Sertifikalar
           </h2>
           <p className="text-on-surface-variant text-center mb-16 max-w-lg mx-auto">
@@ -191,7 +191,7 @@ export default function Home() {
       {/* ── 4 Adım ── */}
       <section id="how" className="bg-white py-24 px-6">
         <div className="max-w-[1280px] mx-auto">
-          <h2 className="text-4xl font-bold text-on-surface text-center mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-on-surface text-center mb-4">
             Toplam Güvenlik İçin 4 Adım
           </h2>
           <p className="text-on-surface-variant text-center mb-16 max-w-md mx-auto">
@@ -212,7 +212,7 @@ export default function Home() {
       {/* ── FAQ ── */}
       <section className="bg-surface py-24 px-6">
         <div className="max-w-[768px] mx-auto">
-          <h2 className="text-4xl font-bold text-on-surface text-center mb-4">Akılınıza Takılan</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-on-surface text-center mb-4">Akılınıza Takılan</h2>
           <p className="text-on-surface-variant text-center mb-12">Sık sorulan sorular.</p>
           <div className="space-y-3">
             {faqs.map(({ q, a }, i) => (
@@ -238,7 +238,7 @@ export default function Home() {
       {/* ── CTA ── */}
       <section className="bg-primary-container py-24 px-6 text-center text-white">
         <div className="max-w-[768px] mx-auto">
-          <h2 className="text-4xl font-bold mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Geleceği Güvence Altına Almaya Hazır Mısınız?
           </h2>
           <p className="text-white/60 mb-10">

@@ -102,7 +102,7 @@ export default function Upload() {
 
   if (success) {
     return (
-      <div className="p-8 flex flex-col items-center justify-center min-h-[60vh]">
+      <div className="p-4 md:p-8 flex flex-col items-center justify-center min-h-[60vh]">
         <div className="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center mb-4">
           <CheckCircle2 className="w-8 h-8 text-secondary" />
         </div>
@@ -121,7 +121,7 @@ export default function Upload() {
   }
 
   return (
-    <div className="p-8 max-w-3xl mx-auto w-full">
+    <div className="p-4 md:p-8 max-w-3xl mx-auto w-full">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-on-surface">Yeni Diploma Yükle</h1>
         <p className="text-sm text-on-surface-variant mt-1">
@@ -237,7 +237,7 @@ export default function Upload() {
         </div>
 
         {/* File Upload — PDF only */}
-        <div className="bg-white rounded-2xl border border-outline-variant/40 card-shadow p-8 mb-6">
+        <div className="bg-white rounded-2xl border border-outline-variant/40 card-shadow p-4 md:p-8 mb-6">
           <label className="block text-xs font-semibold text-on-surface mb-1">
             Diploma Belgesi
           </label>
@@ -269,15 +269,15 @@ export default function Upload() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-xs text-on-surface-variant">
-            <Shield className="w-3.5 h-3.5 text-secondary" />
+            <Shield className="w-3.5 h-3.5 text-secondary shrink-0" />
             <span>Verileriniz AES-256 ile şifrelenmektedir.</span>
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="flex items-center gap-2 px-8 py-3 bg-primary text-on-primary rounded-xl font-semibold text-sm hover:bg-primary/90 transition-all disabled:opacity-60"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3 bg-primary text-on-primary rounded-xl font-semibold text-sm hover:bg-primary/90 transition-all disabled:opacity-60"
           >
             <UploadIcon className="w-4 h-4" />
             {loading ? 'Yükleniyor...' : 'Diploma Yükle'}
