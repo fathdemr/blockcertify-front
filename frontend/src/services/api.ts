@@ -15,6 +15,22 @@ const api = axios.create({
   withCredentials: true,
 });
 
+export function setAuthToken(token: string | null) {
+  if (token) {
+    exapi.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    localStorage.setItem('bc_token', token);
+  } else {
+    delete exapi.defaults.headers.common['Authorization'];
+    delete api.defaults.headers.common['Authorization'];
+    localStorage.removeItem('bc_token');
+  }
+}
+
+// Restore token on page load
+const savedToken = localStorage.getItem('bc_token');
+if (savedToken) setAuthToken(savedToken);
+
 export const authApi = {
   login: (email: string, password: string) =>
     exapi.post('/user/login', { email, password }),

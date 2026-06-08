@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
 import type { User } from '../types';
-import { authApi, userApi } from '../services/api';
+import { authApi, userApi, setAuthToken } from '../services/api';
 
 function toUser(data: Record<string, unknown>): User {
   const firstName = (data.firstName ?? '') as string;
@@ -63,19 +63,23 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
 
   const login = async (email: string, password: string) => {
     const res = await authApi.login(email, password);
-    const raw = res.data.user ?? res.data;
-    persistUser(toUser(raw));
-    // fetch full profile after login
+    const data = res.data;
+    // token varsa header'a set et (cookie çalışmasa da Bearer çalışır)
+    const token = data.token ?? data.jwt ?? data.accessToken ?? null;
+    if (token) setAuthToken(token);
+    persistUser(toUser(data.user ?? data));
+    // güncel profili API'den çek
     try {
       const me = await userApi.getMe();
       persistUser(toUser(me.data));
     } catch {
-      // fallback to login response data
+      // login response verisiyle devam et
     }
   };
 
   const logout = async () => {
     await authApi.logout().catch(() => {});
+    setAuthToken(null);
     setUserState(null);
     localStorage.removeItem('bc_user');
   };
