@@ -141,8 +141,10 @@ export default function Dashboard() {
                       </td>
                       <td className="px-3 md:px-6 py-4">
                         <Link
-                          to={`/admin/dogrula`}
+                          to={d.diploma_no ? `/dogrula?id=${d.diploma_no}` : '/dogrula'}
                           onClick={(e) => e.stopPropagation()}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="text-xs text-on-tertiary-container font-medium flex items-center gap-1 hover:gap-2 transition-all w-fit"
                         >
                           Git <ArrowRight className="w-3 h-3" />

@@ -1,4 +1,5 @@
-import { useState, type FormEvent } from 'react';
+import { useState, type FormEvent, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { ShieldCheck, Search, CheckCircle2, XCircle, Loader2 } from 'lucide-react';
 import { diplomaApi } from '../services/api';
 import type { VerifyResult } from '../types';
@@ -6,23 +7,34 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 export default function Verify() {
-  const [diplomaId, setDiplomaId] = useState('');
+  const [searchParams] = useSearchParams();
+  const [diplomaId, setDiplomaId] = useState(searchParams.get('id') ?? '');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<VerifyResult | null>(null);
 
-  const handleVerify = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!diplomaId.trim()) return;
+  const runVerify = async (id: string) => {
+    if (!id.trim()) return;
     setLoading(true);
     setResult(null);
     try {
-      const res = await diplomaApi.verify(diplomaId.trim());
+      const res = await diplomaApi.verify(id.trim());
       setResult(res.data);
     } catch {
       setResult({ valid: false, message: 'Doğrulama sırasında bir hata oluştu.' });
     } finally {
       setLoading(false);
     }
+  };
+
+  // URL'de ?id= varsa sayfa açılınca otomatik doğrula
+  useEffect(() => {
+    const id = searchParams.get('id');
+    if (id) runVerify(id);
+  }, []);
+
+  const handleVerify = (e: FormEvent) => {
+    e.preventDefault();
+    runVerify(diplomaId);
   };
 
   return (
