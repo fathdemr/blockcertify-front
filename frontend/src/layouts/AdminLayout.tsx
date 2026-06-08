@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, Link } from 'react-router-dom';
 import Sidebar from '../components/admin/Sidebar';
 import { Bell, HelpCircle, Search, Menu } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
@@ -56,7 +56,7 @@ export default function AdminLayout() {
             <button className="hidden sm:flex w-8 h-8 items-center justify-center rounded-lg hover:bg-surface transition-colors">
               <HelpCircle className="w-4 h-4 text-on-surface-variant" />
             </button>
-            <div className="flex items-center gap-2 pl-3 border-l border-outline-variant/30">
+            <Link to="/admin/profil" className="flex items-center gap-2 pl-3 border-l border-outline-variant/30 hover:opacity-80 transition-opacity">
               <div className="text-right hidden sm:block">
                 <p className="text-sm font-semibold text-on-surface leading-tight">
                   {user?.name ?? 'Admin'}
@@ -64,9 +64,9 @@ export default function AdminLayout() {
                 <p className="text-xs text-on-surface-variant capitalize">{user?.role ?? 'Admin'}</p>
               </div>
               <div className="w-8 h-8 rounded-full bg-on-tertiary-container flex items-center justify-center text-white text-xs font-bold shrink-0">
-                {(user?.name ?? 'A').charAt(0).toUpperCase()}
+                {(user?.firstName ?? user?.name ?? 'A').charAt(0).toUpperCase()}
               </div>
-            </div>
+            </Link>
           </div>
         </header>
 

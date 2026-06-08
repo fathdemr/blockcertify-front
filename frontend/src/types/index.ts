@@ -1,6 +1,8 @@
 export interface User {
   id: number;
-  name: string;
+  firstName: string;
+  lastName: string;
+  name: string; // firstName + lastName (frontend computed)
   email: string;
   role: 'admin' | 'student';
 }

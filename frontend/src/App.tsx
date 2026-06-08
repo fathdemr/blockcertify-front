@@ -12,6 +12,7 @@ import Dashboard from './pages/admin/Dashboard';
 import Upload from './pages/admin/Upload';
 import AdminVerify from './pages/admin/Verify';
 import History from './pages/admin/History';
+import Profile from './pages/admin/Profile';
 
 function PublicLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
@@ -58,6 +59,7 @@ export default function App() {
             <Route path="yukle" element={<Upload />} />
             <Route path="dogrula" element={<AdminVerify />} />
             <Route path="gecmis" element={<History />} />
+            <Route path="profil" element={<Profile />} />
           </Route>
         </Routes>
       </Router>

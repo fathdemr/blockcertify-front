@@ -1,11 +1,12 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { ShieldCheck, LayoutDashboard, Upload, CheckCircle, Settings, LogOut } from 'lucide-react';
+import { ShieldCheck, LayoutDashboard, Upload, CheckCircle, UserCircle, Settings, LogOut } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 const navItems = [
   { icon: LayoutDashboard, label: 'Ana Sayfa', to: '/admin' },
   { icon: Upload, label: 'Diploma Yükle', to: '/admin/yukle' },
   { icon: CheckCircle, label: 'Diploma Doğrula', to: '/admin/dogrula' },
+  { icon: UserCircle, label: 'Profil', to: '/admin/profil' },
 ];
 
 interface SidebarProps {

@@ -62,4 +62,12 @@ export const walletApi = {
     api.get('/wallet/status'),
 };
 
+export const userApi = {
+  getMe: () =>
+    exapi.get('/user/me'),
+
+  updateMe: (data: { firstName?: string; lastName?: string; password?: string }) =>
+    exapi.put('/user/me', data),
+};
+
 export default api;
