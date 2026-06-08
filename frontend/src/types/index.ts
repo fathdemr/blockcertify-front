@@ -1,5 +1,5 @@
 export interface User {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
   name: string; // firstName + lastName (frontend computed)

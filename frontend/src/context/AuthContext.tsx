@@ -3,13 +3,13 @@ import type { User } from '../types';
 import { authApi, userApi } from '../services/api';
 
 function toUser(data: Record<string, unknown>): User {
-  const firstName = (data.FirstName ?? data.firstName ?? data.first_name ?? '') as string;
-  const lastName  = (data.LastName  ?? data.lastName  ?? data.last_name  ?? '') as string;
-  const email     = (data.Email     ?? data.email     ?? '') as string;
-  const role      = (data.Role      ?? data.role      ?? 'admin') as User['role'];
-  const id        = (data.ID ?? data.Id ?? data.id ?? 0) as number;
-  const fullName  = `${firstName} ${lastName}`.trim() || (data.Name ?? data.name ?? '') as string;
-  return { id, firstName, lastName, name: fullName || email, email, role };
+  const firstName = (data.firstName ?? '') as string;
+  const lastName  = (data.lastName  ?? '') as string;
+  const email     = (data.email     ?? '') as string;
+  const role      = (data.role      ?? 'admin') as User['role'];
+  const id        = (data.id        ?? '') as string;
+  const fullName  = `${firstName} ${lastName}`.trim() || email;
+  return { id, firstName, lastName, name: fullName, email, role };
 }
 
 interface AuthContextValue {
