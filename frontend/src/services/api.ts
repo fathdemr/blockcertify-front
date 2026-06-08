@@ -1,15 +1,17 @@
 import axios from 'axios';
 import type { Diploma, University, VerifyResult } from '../types';
 
+const BASE = import.meta.env.VITE_API_URL ?? '';
+
 // Public routes: /exapi/...
 const exapi = axios.create({
-  baseURL: '/exapi',
+  baseURL: `${BASE}/exapi`,
   withCredentials: true,
 });
 
 // Private routes: /api/...
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: `${BASE}/api`,
   withCredentials: true,
 });
 
